@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Santé Circle Health – Maximizing Ability</title>
+    <meta name="description" content="Santé Circle Health helps people return to function after illness, injury or accident. Workplace health and rehabilitation services across Canada." />
+    <script>
+      // GitHub Pages SPA redirect restore
+      // Reads the encoded path set by 404.html and restores it via history.replaceState
+      (function () {
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== location.href) {
+          history.replaceState(null, null, redirect);
+        }
+        // Also handle the ?p= query param approach
+        var search = window.location.search;
+        if (search.indexOf('?p=') === 0) {
+          var decoded = decodeURIComponent(search.slice(3)).replace(/&q=(.*)$/, function (_, q) {
+            return '?' + q;
+          });
+          window.history.replaceState(null, null, '/' + decoded);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
