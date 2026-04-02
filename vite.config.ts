@@ -1,13 +1,11 @@
 import { defineConfig } from 'vite'
 import path from 'path'
-import { fileURLToPath } from 'url'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
-
-export default defineConfig({
-  base: '/SCH-main/',
+export default defineConfig(({ command }) => ({
+  // Use repo subpath in production builds for GitHub Pages.
+  base: command === 'build' ? '/SCH-main/' : '/',
   plugins: [
     // The React and Tailwind plugins are both required for Make, even if
     // Tailwind is not being actively used – do not remove them
@@ -15,12 +13,14 @@ export default defineConfig({
     tailwindcss(),
   ],
   resolve: {
-    alias: {
+    alias: [
       // Alias @ to the src directory
-      '@': path.resolve(__dirname, './src'),
-    },
+      { find: '@', replacement: path.resolve(__dirname, './src') },
+      // Resolve Figma exported asset imports to local image files.
+      { find: /^figma:asset\//, replacement: path.resolve(__dirname, './src/assets/') + '/' },
+    ],
   },
 
   // File types to support raw imports. Never add .css, .tsx, or .ts files to this.
   assetsInclude: ['**/*.svg', '**/*.csv'],
-})
+}))

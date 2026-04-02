@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
 import { Phone, Mail, ChevronDown, Menu, X } from 'lucide-react';
-const logoImage = "https://via.placeholder.com/150x50?text=Logo";
-const accessibilityLogo = "https://via.placeholder.com/50x50?text=Acc";
+import logoImage from 'figma:asset/6eaab89616263b6fb99067c23e8e9c5b8caa7c6c.png';
+import accessibilityLogo from 'figma:asset/5cbc03c0df137a6a44d04919373531e89a5788f4.png';
 
 export type Language = 'en' | 'fr';
 
@@ -71,7 +71,7 @@ export function GlobalNavigation({ language, setLanguage, onLoginClick, onAccess
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileActiveDropdown, setMobileActiveDropdown] = useState<string | null>(null);
-  const [closeTimer, setCloseTimer] = useState<ReturnType<typeof setTimeout> | null>(null);
+  const [closeTimer, setCloseTimer] = useState<NodeJS.Timeout | null>(null);
   const t = translations[language];
 
   useEffect(() => {

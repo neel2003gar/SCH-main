@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import { Phone, Mail, Printer, MapPin } from "lucide-react";
-const logoImage = "https://via.placeholder.com/150x50?text=Logo";
+import logoImage from "figma:asset/6eaab89616263b6fb99067c23e8e9c5b8caa7c6c.png";
 
 export type Language = "en" | "fr";
 

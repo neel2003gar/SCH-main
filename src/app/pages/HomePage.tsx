@@ -4,7 +4,7 @@ import {
   Briefcase, Shield, Users, Clipboard, Hand, TrendingUp,
   Lock as LockIcon, ShieldCheck, Database, CheckCircle
 } from 'lucide-react';
-const heroImage = "https://via.placeholder.com/1200x600?text=Hero+Image";
+import heroImage from 'figma:asset/e0e85b4b5db85051a2d2bee6b752b9cd43aa8aa8.png';
 
 export type Language = 'en' | 'fr';
 
