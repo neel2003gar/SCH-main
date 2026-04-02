@@ -15,23 +15,6 @@ import FindRehabClinicPage from './pages/FindRehabClinicPage';
 import FindOccHealthClinicPage from './pages/FindOccHealthClinicPage';
 import NotFoundPage from './pages/NotFoundPage';
 
-// Lofi wireframe imports
-import { LofiRootLayout } from '../lofi/components/LofiRootLayout';
-import LofiHomePage from '../lofi/pages/LofiHomePage';
-import LofiAccommodationPage from '../lofi/pages/services/LofiAccommodationPage';
-import LofiEarlyInterventionPage from '../lofi/pages/services/LofiEarlyInterventionPage';
-import LofiOccupationalTherapyPage from '../lofi/pages/services/LofiOccupationalTherapyPage';
-import LofiErgonomicsPage from '../lofi/pages/services/LofiErgonomicsPage';
-import LofiTherapyPage from '../lofi/pages/services/LofiTherapyPage';
-import LofiDisabilityManagementPage from '../lofi/pages/services/LofiDisabilityManagementPage';
-import LofiAboutUsPage from '../lofi/pages/LofiAboutUsPage';
-import LofiContactUsPage from '../lofi/pages/LofiContactUsPage';
-import LofiGetQuotePage from '../lofi/pages/LofiGetQuotePage';
-import LofiJoinUsPage from '../lofi/pages/LofiJoinUsPage';
-import LofiFindRehabClinicPage from '../lofi/pages/LofiFindRehabClinicPage';
-import LofiFindOccHealthClinicPage from '../lofi/pages/LofiFindOccHealthClinicPage';
-import LofiNotFoundPage from '../lofi/pages/LofiNotFoundPage';
-
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -92,69 +75,6 @@ export const router = createBrowserRouter([
       {
         path: '*',
         Component: NotFoundPage,
-      },
-    ],
-  },
-  // Lofi wireframe routes
-  {
-    path: '/lofi',
-    Component: LofiRootLayout,
-    children: [
-      {
-        index: true,
-        Component: LofiHomePage,
-      },
-      {
-        path: 'services/accommodation-return-to-work',
-        Component: LofiAccommodationPage,
-      },
-      {
-        path: 'services/early-intervention',
-        Component: LofiEarlyInterventionPage,
-      },
-      {
-        path: 'services/occupational-therapy',
-        Component: LofiOccupationalTherapyPage,
-      },
-      {
-        path: 'services/ergonomics',
-        Component: LofiErgonomicsPage,
-      },
-      {
-        path: 'services/therapy',
-        Component: LofiTherapyPage,
-      },
-      {
-        path: 'services/disability-management',
-        Component: LofiDisabilityManagementPage,
-      },
-      {
-        path: 'about-us',
-        Component: LofiAboutUsPage,
-      },
-      {
-        path: 'contact-us',
-        Component: LofiContactUsPage,
-      },
-      {
-        path: 'get-quote',
-        Component: LofiGetQuotePage,
-      },
-      {
-        path: 'join-us',
-        Component: LofiJoinUsPage,
-      },
-      {
-        path: 'find-rehab-clinic',
-        Component: LofiFindRehabClinicPage,
-      },
-      {
-        path: 'find-occ-health-clinic',
-        Component: LofiFindOccHealthClinicPage,
-      },
-      {
-        path: '*',
-        Component: LofiNotFoundPage,
       },
     ],
   },
