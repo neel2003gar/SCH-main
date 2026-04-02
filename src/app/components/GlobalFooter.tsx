@@ -1,6 +1,6 @@
 import { Link } from "react-router";
-import logoImage from '../../assets/6eaab89616263b6fb99067c23e8e9c5b8caa7c6c.png';
-
+import { Phone, Mail, Printer, MapPin } from "lucide-react";
+import logoImage from "figma:asset/6eaab89616263b6fb99067c23e8e9c5b8caa7c6c.png";
 
 export type Language = "en" | "fr";
 
@@ -132,40 +132,53 @@ export function GlobalFooter({ language }: GlobalFooterProps) {
 
             <div className="space-y-3 text-white/70 text-sm">
               <div>
-                <div className="text-white font-semibold mb-1">
-                  {t.corporateOffice}:
+                <div className="flex items-center gap-2 text-white font-semibold mb-1">
+                  <MapPin size={16} className="text-[#6ABF4B] flex-shrink-0" />
+                  <span>{t.corporateOffice}:</span>
                 </div>
-                <div>
+                <div className="pl-6">
                   4711 Yonge Street, 10th Floor
                   <br />
                   Toronto, Ontario, M2N 6K8, Canada
                 </div>
               </div>
               <div>
-                <div className="text-white font-semibold mb-1">
-                  {t.regionalOffice}:
+                <div className="flex items-center gap-2 text-white font-semibold mb-1">
+                  <MapPin size={16} className="text-[#6ABF4B] flex-shrink-0" />
+                  <span>{t.regionalOffice}:</span>
                 </div>
-                <div>
+                <div className="pl-6">
                   595 Howe Street, Suite 306
                   <br />
                   Vancouver, British Columbia, V6C 2T5
                 </div>
               </div>
               <div>
-                <div className="text-white font-semibold mb-1">
-                  {t.regionalOffice}:
+                <div className="flex items-center gap-2 text-white font-semibold mb-1">
+                  <MapPin size={16} className="text-[#6ABF4B] flex-shrink-0" />
+                  <span>{t.regionalOffice}:</span>
                 </div>
-                <div>
+                <div className="pl-6">
                   9160 Forum Corporate Parkway, Suite 350
                   <br />
                   Fort Myers, Florida, USA 33905
                 </div>
               </div>
-              <div className="pt-2">
-                <div>
-                  T: +1 (833) 783-8088 | F: +1 (647) 243-5947
+              <div className="pt-2 space-y-1.5">
+                <div className="flex items-center gap-2">
+                  <Phone size={16} className="text-[#6ABF4B] flex-shrink-0" />
+                  <span>T: +1 (833) 783-8088</span>
                 </div>
-                <div>info@santecirclehealth.com</div>
+                <div className="flex items-center gap-2">
+                  <Printer size={16} className="text-[#6ABF4B] flex-shrink-0" />
+                  <span>F: +1 (647) 243-5947</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Mail size={16} className="text-[#6ABF4B] flex-shrink-0" />
+                  <a href="mailto:info@santecirclehealth.com" className="hover:text-[#6ABF4B] transition-colors">
+                    info@santecirclehealth.com
+                  </a>
+                </div>
               </div>
             </div>
           </div>

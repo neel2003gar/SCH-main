@@ -23,8 +23,7 @@ import {
   FileText,
   Layers,
 } from 'lucide-react';
-import accessibilityLogo from '../../assets/5cbc03c0df137a6a44d04919373531e89a5788f4.png';
-
+import accessibilityLogo from 'figma:asset/5cbc03c0df137a6a44d04919373531e89a5788f4.png';
 
 export type Language = 'en' | 'fr';
 
@@ -223,6 +222,127 @@ export function AccessibilityWidget({ language, setLanguage, isOpen, setIsOpen }
     } else {
       if (smartContrastStyle) smartContrastStyle.remove();
     }
+
+    // Screen Reader Mode
+    const screenReaderStyle = document.getElementById('screen-reader-mode');
+    if (settings.screenReader) {
+      if (!screenReaderStyle) {
+        const style = document.createElement('style');
+        style.id = 'screen-reader-mode';
+        style.textContent = `
+          * { outline: none !important; }
+          *:focus { outline: 3px solid #0066CC !important; outline-offset: 2px !important; }
+          a:focus, button:focus, input:focus, select:focus, textarea:focus { 
+            outline: 3px solid #0066CC !important; 
+            outline-offset: 2px !important;
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.2) !important;
+          }
+        `;
+        document.head.appendChild(style);
+      }
+      // Add aria-live region for announcements
+      if (!document.getElementById('sr-announcer')) {
+        const announcer = document.createElement('div');
+        announcer.id = 'sr-announcer';
+        announcer.setAttribute('aria-live', 'polite');
+        announcer.setAttribute('aria-atomic', 'true');
+        announcer.style.cssText = 'position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden;';
+        document.body.appendChild(announcer);
+      }
+    } else {
+      if (screenReaderStyle) screenReaderStyle.remove();
+      const announcer = document.getElementById('sr-announcer');
+      if (announcer) announcer.remove();
+    }
+
+    // Tooltips
+    if (settings.tooltips) {
+      // Add title attributes to elements that don't have them
+      const elements = document.querySelectorAll('button, a, input, select, textarea');
+      elements.forEach((el) => {
+        if (!el.getAttribute('title') && !el.getAttribute('aria-label')) {
+          const text = (el as HTMLElement).innerText || (el as HTMLElement).textContent || '';
+          if (text.trim()) {
+            el.setAttribute('data-temp-title', text.trim().substring(0, 50));
+            el.setAttribute('title', text.trim().substring(0, 50));
+          }
+        }
+      });
+    } else {
+      // Remove temporary titles
+      const elements = document.querySelectorAll('[data-temp-title]');
+      elements.forEach((el) => {
+        el.removeAttribute('title');
+        el.removeAttribute('data-temp-title');
+      });
+    }
+
+    // Page Structure
+    const pageStructureStyle = document.getElementById('page-structure');
+    if (settings.pageStructure) {
+      if (!pageStructureStyle) {
+        const style = document.createElement('style');
+        style.id = 'page-structure';
+        style.textContent = `
+          h1, h2, h3, h4, h5, h6 { 
+            outline: 2px solid #FF6B6B !important; 
+            outline-offset: 2px !important;
+            background-color: rgba(255, 107, 107, 0.1) !important;
+          }
+          nav, header, footer, main, aside, section { 
+            outline: 2px dashed #4ECDC4 !important; 
+            outline-offset: 2px !important;
+            position: relative !important;
+          }
+          nav::before, header::before, footer::before, main::before, aside::before, section::before {
+            content: attr(data-landmark) !important;
+            position: absolute !important;
+            top: -20px !important;
+            left: 0 !important;
+            background: #4ECDC4 !important;
+            color: white !important;
+            padding: 2px 6px !important;
+            font-size: 10px !important;
+            font-weight: bold !important;
+            z-index: 10000 !important;
+          }
+        `;
+        document.head.appendChild(style);
+      }
+      // Label landmarks
+      document.querySelectorAll('nav').forEach(el => el.setAttribute('data-landmark', 'NAV'));
+      document.querySelectorAll('header').forEach(el => el.setAttribute('data-landmark', 'HEADER'));
+      document.querySelectorAll('footer').forEach(el => el.setAttribute('data-landmark', 'FOOTER'));
+      document.querySelectorAll('main').forEach(el => el.setAttribute('data-landmark', 'MAIN'));
+      document.querySelectorAll('aside').forEach(el => el.setAttribute('data-landmark', 'ASIDE'));
+      document.querySelectorAll('section').forEach(el => el.setAttribute('data-landmark', 'SECTION'));
+    } else {
+      if (pageStructureStyle) pageStructureStyle.remove();
+    }
+
+    // Dictionary (double-click to define)
+    const handleDoubleClick = (e: MouseEvent) => {
+      const selection = window.getSelection();
+      const text = selection?.toString().trim();
+      if (text && text.split(' ').length === 1) {
+        const announcer = document.getElementById('sr-announcer');
+        if (announcer) {
+          announcer.textContent = `Looking up definition for: ${text}`;
+        }
+        // Simple definition lookup
+        alert(`Definition lookup for: "${text}"\n\nThis would normally open a dictionary popup or fetch from an API.`);
+      }
+    };
+
+    if (settings.dictionary) {
+      document.addEventListener('dblclick', handleDoubleClick);
+    }
+
+    return () => {
+      if (settings.dictionary) {
+        document.removeEventListener('dblclick', handleDoubleClick);
+      }
+    };
   }, [settings]);
 
   const toggleSetting = (key: keyof AccessibilitySettings) => {
@@ -249,14 +369,23 @@ export function AccessibilityWidget({ language, setLanguage, isOpen, setIsOpen }
     let newSettings = { ...defaultSettings };
 
     switch (profileId) {
+      case 'motor':
+        newSettings = { ...newSettings, cursor: true, biggerText: 1, pauseAnimations: true, highlightLinks: true };
+        break;
       case 'blind':
         newSettings = { ...newSettings, screenReader: true, biggerText: 2, highlightLinks: true };
+        break;
+      case 'colorBlind':
+        newSettings = { ...newSettings, smartContrast: true, highlightLinks: true };
         break;
       case 'dyslexia':
         newSettings = { ...newSettings, dyslexiaFriendly: true, textSpacing: true, lineHeight: true };
         break;
       case 'lowVision':
         newSettings = { ...newSettings, biggerText: 2, contrastPlus: true, cursor: true };
+        break;
+      case 'cognitive':
+        newSettings = { ...newSettings, pauseAnimations: true, textSpacing: true, lineHeight: true, textAlign: true };
         break;
       case 'seizure':
         newSettings = { ...newSettings, pauseAnimations: true, saturation: 1 };

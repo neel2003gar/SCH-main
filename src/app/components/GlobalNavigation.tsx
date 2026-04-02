@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
-import { Phone, Mail, ChevronDown, Menu, X, Accessibility } from 'lucide-react';
-import logoImage from '../../assets/6eaab89616263b6fb99067c23e8e9c5b8caa7c6c.png';
-
+import { Phone, Mail, ChevronDown, Menu, X } from 'lucide-react';
+import logoImage from 'figma:asset/6eaab89616263b6fb99067c23e8e9c5b8caa7c6c.png';
+import accessibilityLogo from 'figma:asset/5cbc03c0df137a6a44d04919373531e89a5788f4.png';
 
 export type Language = 'en' | 'fr';
 
@@ -302,7 +302,11 @@ export function GlobalNavigation({ language, setLanguage, onLoginClick, onAccess
               aria-label="Accessibility"
               title="Accessibility Options"
             >
-              <Accessibility size={20} />
+              <img 
+                src={accessibilityLogo} 
+                alt="Accessibility" 
+                className="h-6 w-6 object-contain"
+              />
             </button>
 
             <button
@@ -338,7 +342,11 @@ export function GlobalNavigation({ language, setLanguage, onLoginClick, onAccess
               style={{ color: '#6ABF4B' }}
               aria-label="Accessibility"
             >
-              <Accessibility size={22} />
+              <img 
+                src={accessibilityLogo} 
+                alt="Accessibility" 
+                className="h-6 w-6 object-contain"
+              />
             </button>
 
             <button
