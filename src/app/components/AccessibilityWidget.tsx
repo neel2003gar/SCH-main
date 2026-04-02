@@ -23,7 +23,7 @@ import {
   FileText,
   Layers,
 } from 'lucide-react';
-import accessibilityLogo from 'figma:asset/5cbc03c0df137a6a44d04919373531e89a5788f4.png';
+const accessibilityLogo = "https://via.placeholder.com/50x50?text=Acc";
 
 export type Language = 'en' | 'fr';
 
@@ -97,7 +97,7 @@ export function AccessibilityWidget({ language, setLanguage, isOpen, setIsOpen }
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'u') {
         e.preventDefault();
-        setIsOpen((prev) => !prev);
+        setIsOpen(isOpen ? false : true);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -355,7 +355,7 @@ export function AccessibilityWidget({ language, setLanguage, isOpen, setIsOpen }
         const current = prev.saturation;
         return { ...prev, saturation: current >= 2 ? 0 : current + 1 };
       }
-      return { ...prev, [key]: !prev[key as string] };
+      return { ...prev, [key]: !prev[key] };
     });
   };
 
